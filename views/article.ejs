@@ -1,0 +1,15 @@
+<%- include ('partials/header')-%>
+
+<h1><%= article.title %></h1>
+<h5>Written by <%= author %></h5>
+<p><%= article.body %></p>
+<hr>
+<% if (user) { %>
+  <% if (user.id == article.author) { %>
+    <a href="/articles/edit/<%= article._id %> " class="btn btn-dark">Edit</a>
+    <a href="#" class="btn btn-danger delete-article" data-id=<%= article._id %>
+      >Delete</a>
+  <% } %>
+<% } %>
+
+<%- include ('partials/footer')-%>

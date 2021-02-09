@@ -1,0 +1,22 @@
+<%- include ('partials/header') -%>
+
+<h1>Edit Article</h1>
+<form action="/articles/edit/<%= article._id %> " method="post">
+  <div id="form-group">
+    <label>Title:</label>
+    <input
+      type="text"
+      class="form-control"
+      name="title"
+      value="<%= article.title %>"
+    />
+  </div>
+  
+  <div id="form-group">
+    <label>Body:</label>
+    <textarea class="form-control" name="body"><%= article.body %></textarea>
+  </div>
+  <br />
+  <input type="submit" class="btn btn-primary" value="Submit" />
+</form>
+<%- include ('partials/footer') -%>

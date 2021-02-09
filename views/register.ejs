@@ -1,0 +1,42 @@
+<%- include ('partials/header') -%>
+
+<% if (errors) { %>
+  <div class="mt-4">
+    <% errors.forEach(error => { %>
+      <div class="alert alert-danger"><%= error.msg %> </div>
+    <% }) %>
+  </div>
+<% } %>
+
+<h1>Register</h1>
+<form action="/users/register" method="post">
+  <div id="form-group">
+    <label>Name:</label>
+    <input type="text" class="form-control" name="name" />
+  </div>
+
+  <div id="form-group">
+    <label>Email:</label>
+    <input type="email" class="form-control" name="email" />
+  </div>
+
+  <div id="form-group">
+    <label>Username:</label>
+    <input type="text" class="form-control" name="username" />
+  </div>
+
+  <div id="form-group">
+    <label>Password:</label>
+    <input class="form-control" name="password" type="password" />
+  </div>
+
+  <div id="form-group">
+    <label>Confirm Password:</label>
+    <input class="form-control" name="password2" type="password" />
+  </div>
+
+  <br />
+  <input type="submit" class="btn btn-primary" value="Submit" />
+</form>
+
+<%- include ('partials/footer') -%>
