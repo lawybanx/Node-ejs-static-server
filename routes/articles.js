@@ -6,7 +6,7 @@ const { body, validationResult } = require('express-validator');
 const Article = require('../models/article');
 const User = require('../models/user.model');
 
-let errors;
+let errors, user;
 
 // Add Route
 router.get('/add', ensureAuthenticated, (req, res) => {
@@ -24,7 +24,7 @@ router.post(
     // Get Errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.render('add_articles', { errors: errors.array() });
+      return res.render('add_articles', { errors: errors.array(), user });
     }
 
     let article = new Article({
@@ -81,11 +81,21 @@ router.post('/edit/:id', (req, res) => {
 
 // Delete Single Article
 router.delete('/:id', (req, res) => {
+  if (!req.user._id) {
+    res.status(500).send();
+  }
+
   let query = { _id: req.params.id };
 
-  Article.deleteOne(query, (err) => {
-    if (err) {
-      console.log(`Error: ` + err);
+  Article.findOne(query, (err, article) => {
+    if (article.author != req.user.id) {
+      res.status(500).send();
+    } else {
+      Article.deleteOne(query, (err) => {
+        if (err) {
+          console.log(`Error: ` + err);
+        }
+      });
     }
   });
 });

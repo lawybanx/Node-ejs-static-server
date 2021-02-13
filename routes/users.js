@@ -7,7 +7,7 @@ const passport = require('passport');
 // Bring in User Model
 const User = require('../models/user.model');
 
-let errors;
+let errors, user;
 
 // Register Form
 router.get('/register', (req, res) => {
@@ -34,7 +34,7 @@ router.post(
     // Get Errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.render('register', { errors: errors.array() });
+      return res.render('register', { errors: errors.array(), user });
     }
 
     let newUser = new User({
