@@ -1,25 +1,15 @@
 const express = require('express');
 const path = require('path');
-const mongoose = require('mongoose');
 const session = require('express-session');
-const config = require('./config/database');
 const passport = require('passport');
+const dotenv = require('dotenv');
+const connectDB = require('./config/db');
+
+// dotenv
+dotenv.config({ path: './config/config.env' });
 
 // Connect MongoDB at default port 27017.
-mongoose.connect(
-  config.database,
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  },
-  (err) => {
-    if (!err) {
-      console.log('MongoDB Connection Succeeded.');
-    } else {
-      console.log('Error in DB connection: ' + err);
-    }
-  }
-);
+connectDB();
 
 // Express Init
 const app = express();
@@ -87,5 +77,7 @@ const PORT = process.env.PORT || 3000;
 
 // Start Server
 app.listen(PORT, () => {
-  console.log(`Server is running on ${PORT}`);
+  console.log(
+    `Server is running in ${process.env.NODE_ENV} mode on port ${PORT}`
+  );
 });
